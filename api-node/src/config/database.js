@@ -12,4 +12,13 @@ const pool = new Pool({
   port: 5432,
 });
 
+export const connectDatabase = async () => {
+  try {
+    await pool.query("SELECT NOW()");
+    console.log("Conectado ao banco de dados.");
+  } catch (error) {
+    console.error("Erro ao conectar com banco de dados.");
+  }
+};
+
 export default pool;
