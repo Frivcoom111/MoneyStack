@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { createUser, findUserByEmail } from "../models/userModel.js";
 import { generateToken } from "../utils/generateToken.js";
+import { generateHashPassword } from "../utils/generateHashPassword.js";
 
 dotenv.config();
 
@@ -22,8 +22,7 @@ export const registerService = async ({ name, email, password }) => {
   }
 
   // Processamento senha.
-  const salt = await bcrypt.genSalt(10);
-  const hashPassword = await bcrypt.hash(password, salt);
+  const hashPassword = await generateHashPassword(password);
 
   // Criando usuário no banco de dados.
   const newUser = await createUser(name, email, hashPassword);
